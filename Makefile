@@ -1,25 +1,26 @@
 NAME = fdf
 SRC = fdf.c \
-	  draw/draw.c \
-	  draw/draw2.c \
-	  read.c \
-	  hook/hook.c \
-	  tools.c
+      draw/draw.c \
+      draw/draw2.c \
+      read.c \
+      hook/hook.c \
+      tools.c
 OBJ = $(SRC:.c=.o)
 MLX = .minilibx
 LIBFT = Libft
+LIBFT_A = $(LIBFT)/libft.a
 FLAGS = -fsanitize=address -g3 #-Wall -Wextra -Werror
 LIBS = -L$(MLX) -lmlx -L$(LIBFT) -lft -lXext -lX11
 
-all: $(LIBFT) $(NAME)
+all: $(LIBFT_A) $(NAME)
 
-$(LIBFT):
+$(LIBFT_A):
 	$(MAKE) -C $(LIBFT)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT_A) $(OBJ)
 	$(CC) $(FLAGS) -I$(MLX) -I$(LIBFT) $(OBJ) -o $@ $(LIBS)
 
-%.o: %.c $(LIBFT)
+%.o: %.c $(LIBFT_A)
 	$(CC) $(FLAGS) -I$(MLX) -I$(LIBFT) -c $< -o $@
 
 clean:
@@ -33,4 +34,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
