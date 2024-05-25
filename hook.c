@@ -60,7 +60,7 @@ int	mouse_hook(int button, int x, int y, t_mlx *mlx)
 	(void)y;
 	if (button == SCROLL_UP)
 		mlx->map.zoom += 4;
-	else if (button == SCROLL_DOWN)
+	else if (button == SCROLL_DOWN && mlx->map.zoom - 4 > 0)
 		mlx->map.zoom -= 4;
 	else
 		return (0);
