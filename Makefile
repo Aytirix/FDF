@@ -1,15 +1,14 @@
 NAME = fdf
 SRC = fdf.c \
-      draw/draw.c \
-      draw/draw2.c \
+      draw.c \
       read.c \
-      hook/hook.c \
+      hook.c \
       tools.c
 OBJ = $(SRC:.c=.o)
 MLX = .minilibx
 LIBFT = Libft
 LIBFT_A = $(LIBFT)/libft.a
-FLAGS = -fsanitize=address -g3 #-Wall -Wextra -Werror
+FLAGS = -fsanitize=address -g3 -Wall -Wextra -Werror
 LIBS = -L$(MLX) -lmlx -L$(LIBFT) -lft -lXext -lX11
 
 all: $(LIBFT_A) $(NAME)

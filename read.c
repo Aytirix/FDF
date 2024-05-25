@@ -99,7 +99,7 @@ int	count_numbers(char *line)
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] && line[i] == ' ' || line[i] == '-')
+		while (line[i] && (line[i] == ' ' || line[i] == '-'))
 			i++;
 		if (line[i] && ft_isdigit(line[i]))
 			count++;

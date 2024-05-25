@@ -47,6 +47,32 @@ int	mlx_start(t_mlx *mlx, int reset, int draw)
 	return (1);
 }
 
+void	start(t_mlx *mlx, char *filepath, int ac, char **av)
+{
+	if (ac != 2)
+		ft_putstr_fd(PATH_INVALID, 1);
+	else if (!count_lines(filepath, mlx))
+		ft_putstr_fd(MAP_INVALID, 1);
+	else
+	{
+		if (!read_file(av[1], mlx))
+		{
+			free_map(&mlx->map);
+			exit(1);
+		}
+		mlx->mlx = mlx_init();
+		mlx_get_screen_size(mlx->mlx, &mlx->width, &mlx->height);
+		mlx->win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "FDF");
+		mlx->img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
+		mlx->img_data = mlx_get_data_addr(mlx->img, &mlx->map.bits_per_pixel,
+				&mlx->map.size_line, &mlx->map.endian);
+		init_hook(mlx);
+		draw_menu(mlx);
+		return ;
+	}
+	exit(1);
+}
+
 int	main(int ac, char **av)
 {
 	t_mlx	mlx;

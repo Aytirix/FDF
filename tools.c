@@ -12,30 +12,18 @@
 
 #include "fdf.h"
 
-void	start(t_mlx *mlx, char *filepath, int ac, char **av)
+void	cpy_pixel(t_mlx *mlx, int x, int y, int color)
 {
-	if (ac != 2)
-		ft_putstr_fd(PATH_INVALID, 1);
-	else if (!count_lines(filepath, mlx))
-		ft_putstr_fd(MAP_INVALID, 1);
-	else
-	{
-		if (!read_file(av[1], mlx))
-		{
-			free_map(&mlx->map);
-			exit(1);
-		}
-		mlx->mlx = mlx_init();
-		mlx_get_screen_size(mlx->mlx, &mlx->width, &mlx->height);
-		mlx->win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "FDF");
-		mlx->img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
-		mlx->img_data = mlx_get_data_addr(mlx->img, &mlx->map.bits_per_pixel,
-				&mlx->map.size_line, &mlx->map.endian);
-		init_hook(mlx);
-		draw_menu(mlx);
+	ft_memcpy(mlx->img_data + y * mlx->map.size_line + x
+		* mlx->map.bits_per_pixel / 8, &color, mlx->map.bits_per_pixel / 8);
+	if (mlx->map.lines > 100 || mlx->map.columns > 100)
 		return ;
-	}
-	exit(1);
+	ft_memcpy(mlx->img_data + y * mlx->map.size_line + (x + 1)
+		* mlx->map.bits_per_pixel / 8, &color, mlx->map.bits_per_pixel / 8);
+	ft_memcpy(mlx->img_data + (y + 1) * mlx->map.size_line + x
+		* mlx->map.bits_per_pixel / 8, &color, mlx->map.bits_per_pixel / 8);
+	ft_memcpy(mlx->img_data + (y + 1) * mlx->map.size_line + (x + 1)
+		* mlx->map.bits_per_pixel / 8, &color, mlx->map.bits_per_pixel / 8);
 }
 
 void	stop(t_mlx mlx)

@@ -81,6 +81,7 @@ typedef struct s_mlx
 // FDF
 void		clear_image(t_mlx *mlx);
 int			mlx_start(t_mlx *mlx, int reset, int draw);
+void		start(t_mlx *mlx, char *filepath, int ac, char **av);
 
 // hook mouse
 int			init_hook(t_mlx *mlx);
@@ -99,15 +100,12 @@ void		free_map(t_map *map);
 // draw
 int			get_color(t_point a, t_point b, double ratio);
 t_point		*convert_point(int x, int y, t_mlx *mlx);
+void		draw_map(t_mlx *mlx);
+void		draw_line(t_mlx *mlx, t_point a, t_point b);
 void		choice_color(int x, int y, t_mlx *mlx, t_point *point);
 
-// draw 2
-void		draw_map(t_mlx *mlx);
-void		cpy_pixel(t_mlx *mlx, int x, int y, int color);
-void		draw_line(t_mlx *mlx, t_point a, t_point b);
-
 // tools
-void		start(t_mlx *mlx, char *filepath, int ac, char **av);
+void		cpy_pixel(t_mlx *mlx, int x, int y, int color);
 void		stop(t_mlx mlx);
 int			draw_menu(t_mlx *mlx);
 int			iso_x(int x, int y);
